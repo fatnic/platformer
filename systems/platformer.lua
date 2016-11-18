@@ -50,6 +50,7 @@ function PlatformerSystem:update(dt)
 
             position.x, position.y = actual.x, actual.y
 
+            self.world:update(e, position.x, position.y)
         end
 
     end

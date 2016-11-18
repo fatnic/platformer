@@ -40,7 +40,7 @@ Window = {}
 function love.load()
 
     engine = Engine()
-    world = bump.newWorld(32)
+    world = bump.newWorld(16)
 
     engine:addSystem(SpriteDrawingSystem())
     engine:addSystem(PlatformerSystem(world))
@@ -51,12 +51,9 @@ function love.load()
     -- player entity
     player = Entity()
     player:add(Sprite(assets.img_player))
-    player:add(Position())
+    player:add(Position(100, 100))
     player:add(Platformer())
     engine:addEntity(player)
-
-    -- add in the platform collison rectangles
-    -- for _, p in pairs(map.layers['collision'].objects) do world:add(p, p.x, p.y, p.width, p.height) end
 
     world:add({}, -5, 0, 5, love.graphics.getHeight())
     world:add({}, love.graphics.getWidth(), 0, 5, love.graphics.getHeight())
