@@ -4,6 +4,7 @@ lovetoys.initialize({debug=true, globals=true})
 sti = require 'ext.sti'
 bump = require 'ext.bump'
 vec = require 'ext.hump.vector'
+Timer = require 'ext.hump.timer'
 
 LightWorld = require 'ext.lightworld'
 
@@ -24,6 +25,7 @@ PlatformerSystem    = require 'systems.platformer'
 -- assets
 assets = {
     img_player = love.graphics.newImage('assets/images/player.png'),
+    img_thing = love.graphics.newImage('assets/images/thing.png'),
 }
 
 -- input
@@ -46,9 +48,8 @@ function love.load()
 
     light = LightWorld({
         ambient = {20, 20, 20},
-        glowBlur = 0.0,
     })
-    light:setShadowBlur(10)
+    light:setShadowBlur(4)
 
     engine:addSystem(SpriteDrawingSystem())
     engine:addSystem(PlatformerSystem(world))
@@ -77,14 +78,15 @@ function love.load()
 end
 
 function love.update(dt)
+    Timer.update(dt)
     Input:update()
     
     if Input:down    'right' then player:get("Platformer"):moveRight(dt) end
     if Input:down    'left'  then player:get("Platformer"):moveLeft(dt) end
     if Input:pressed 'jump'  then player:get("Platformer"):jump(dt) end
 
-    plight:setPosition(player:get("Position").x + math.random(6,8), player:get("Position").y + 25)
-    plight:setRange(math.random(300, 400))
+    plight:setPosition(player:get("Position").x + 7, player:get("Position").y + 25)
+    Timer.every(0.4, function() plight:setRange(math.random(300, 400)) end)
     
     light:update(dt)
     engine:update(dt)
