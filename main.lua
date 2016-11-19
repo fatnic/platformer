@@ -68,9 +68,15 @@ function love.load()
 
     for _, lt in pairs(lighting) do
         local lp = lt.properties
-        local lg = lights:newLight(lt.x + lt.width / 2, lt.y + lt.height / 2, lp.r, lp.g, lp.b, lt.width / 2)
-        -- if lp.direction then lg:setDirection(math.rad(lp.direction)) end
-        -- if lp.angle then lg:setAngle(math.rad(lp.angle)) end
+        
+        local l = Entity()
+        l:add(Position(lt.x + lt.width / 2, lt.y + lt.height / 2))
+        l:add(LightEmitter(lp.r, lp.g, lp.b, lt.width / 2, true))
+
+        engine:addEntity(l)
+
+        if lp.direction then l:get("LightEmitter").light:setDirection(math.rad(lp.direction)) end
+        if lp.angle then l:get("LightEmitter").light:setAngle(math.rad(lp.angle)) end
     end
 
     map.layers['collision'].visible = false
@@ -81,7 +87,6 @@ function love.load()
     player:add(Sprite(assets.img_player))
     player:add(Position(100, 100))
     player:add(Platformer())
-    -- player:add(Color(255, 127, 63))
     player:add(LightEmitter(255, 127, 63, 300))
     engine:addEntity(player)
 

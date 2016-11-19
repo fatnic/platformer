@@ -17,7 +17,8 @@ function LightingSystem:update(dt)
         local pos = e:get("Position")
         local le = e:get("LightEmitter")
 
-        le.light:setPosition(pos.x, pos.y)
+        if not le.static then le.light:setPosition(pos.x, pos.y) end
+
     end
 
     self.lights:update(dt)

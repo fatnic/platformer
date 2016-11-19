@@ -8,7 +8,7 @@ return {
   height = 30,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 22,
+  nextobjectid = 24,
   properties = {},
   tilesets = {
     {
@@ -310,7 +310,7 @@ return {
       objects = {
         {
           id = 18,
-          name = "glowlight",
+          name = "",
           type = "",
           shape = "ellipse",
           x = 384,
