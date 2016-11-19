@@ -46,10 +46,11 @@ Window = {}
 
 function love.load()
 
+
     engine = Engine()
     world = bump.newWorld(16)
 
-    lights = LightWorld({ ambient={60, 60, 60} })
+    lights = LightWorld({ ambient={20, 20, 20} })
     lights:setShadowBlur(4)
 
     engine:addSystem(SpriteDrawingSystem())
@@ -90,12 +91,11 @@ function love.load()
     player:add(LightEmitter(255, 127, 63, 300))
     engine:addEntity(player)
 
-    world:add({}, -5, 0, 5, love.graphics.getHeight())
-    world:add({}, love.graphics.getWidth(), 0, 5, love.graphics.getHeight())
-    
 end
 
 function love.update(dt)
+    love.window.setTitle("Lights -- fps: " .. love.timer.getFPS())
+
     Timer.update(dt)
     Input:update()
     
