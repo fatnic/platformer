@@ -27,7 +27,7 @@ LightingSystem      = require 'systems.lighting'
 
 -- assets
 assets = {
-    img_player = love.graphics.newImage('assets/images/player.png'),
+    img_player = love.graphics.newImage('assets/images/smallplayer.png'),
     img_thing = love.graphics.newImage('assets/images/thing.png'),
 }
 
@@ -49,7 +49,7 @@ function love.load()
     engine = Engine()
     world = bump.newWorld(16)
 
-    lights = LightWorld({ ambient={20, 20, 20} })
+    lights = LightWorld({ ambient={60, 60, 60} })
     lights:setShadowBlur(4)
 
     engine:addSystem(SpriteDrawingSystem())
@@ -59,7 +59,7 @@ function love.load()
     map = sti('assets/maps/grid.lua')
 
     local collisions = map.layers['collision'].objects
-    local lighting = map.layers['lighting'].objects
+    local lighting   = map.layers['lighting'].objects
 
     for _, c in pairs(collisions) do
         world:add({properties=c.properties}, c.x, c.y, c.width, c.height)
@@ -104,7 +104,7 @@ function love.update(dt)
     if Input:pressed 'jump'  then player:get("Platformer"):jump(dt) end
 
     -- light flicker
-    -- Timer.every(0.4, function() player:get("LightEmitter").light:setRange(math.random(300, 400)) end)
+    Timer.every(0.4, function() player:get("LightEmitter").light:setRange(math.random(300, 400)) end)
 
     engine:update(dt)
 end
