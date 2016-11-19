@@ -25,12 +25,10 @@ function LightingSystem:update(dt)
 end
 
 function LightingSystem:render(lgts, mp, eng)
-        -- camera:attach()
     lgts:draw(function() 
         mp:draw()
         eng:draw()
     end)
-        -- camera:detach()
 end
 
 function LightingSystem:requires()
