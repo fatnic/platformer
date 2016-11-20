@@ -1,0 +1,9 @@
+
+    smoke = love.graphics.newParticleSystem(assets.img_particle, 62)
+    smoke:setParticleLifetime(0.5, 1)
+    smoke:setLinearAcceleration(-5, -10, 5, -40)
+    smoke:setColors(50, 50, 50, 50, 100, 100, 100, 50, 150, 150, 150, 50)
+    smoke:setEmitterLifetime(-1)
+    smoke:setSizes(0.05, 0.1, 0.15, 0.2, 0.25)
+    smoke:setSpread(math.rad(55))
+    smoke:setTangentialAcceleration(3, 10)

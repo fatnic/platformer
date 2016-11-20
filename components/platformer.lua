@@ -23,7 +23,7 @@ function Platformer:moveLeft(dt)
 end
 
 function Platformer:jump(dt)
-    if self.jumping == false then
+    if not self.jumping and self.grounded then
         self.jumping =  true
         self.grounded = false
         self.velocity.y = -self.jumpheight

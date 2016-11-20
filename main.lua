@@ -1,10 +1,14 @@
 lovetoys = require 'ext.lovetoys.lovetoys'
 lovetoys.initialize({debug=true, globals=true})
 
+assets = require 'assets'
+
 sti = require 'ext.sti'
 bump = require 'ext.bump'
+lume = require 'ext.lume'
 vec = require 'ext.hump.vector'
 Timer = require 'ext.hump.timer'
+Gamera = require 'ext.gamera'
 
 LightWorld = require 'ext.lightworld'
 
@@ -25,13 +29,6 @@ SpriteDrawingSystem = require 'systems.drawing.sprite'
 PhysicsSystem       = require 'systems.physics'
 PlatformerSystem    = require 'systems.platformer'
 LightingSystem      = require 'systems.lighting'
-ParticlesSystem      = require 'systems.particles'
-
--- assets
-assets = {
-    img_player   = love.graphics.newImage('assets/images/smallplayer.png'),
-    img_particle = love.graphics.newImage('assets/images/particle.png'),
-}
 
 -- input
 baton = require 'ext.baton'
@@ -57,9 +54,10 @@ function love.load()
     engine:addSystem(SpriteDrawingSystem())
     engine:addSystem(PlatformerSystem(world))
     engine:addSystem(LightingSystem(lights))
-    engine:addSystem(ParticlesSystem())
 
     map = sti('assets/maps/grid.lua')
+
+    camera = Gamera.new(0, 0, (map.width * map.tilewidth) + 500, (map.height * map.tileheight))
 
     local collisions = map.layers['collision'].objects
     local lighting   = map.layers['lighting'].objects
@@ -91,17 +89,7 @@ function love.load()
     player:add(Position(100, 100))
     player:add(Platformer())
     player:add(LightEmitter(255, 127, 63, 300))
-    -- player:add(ParticlesSystem(assets.img_particle))
     engine:addEntity(player)
-
-    smoke = love.graphics.newParticleSystem(assets.img_particle, 62)
-    smoke:setParticleLifetime(0.5, 1)
-    smoke:setLinearAcceleration(-5, -10, 5, -40)
-    smoke:setColors(50, 50, 50, 50, 100, 100, 100, 50, 150, 150, 150, 50)
-    smoke:setEmitterLifetime(-1)
-    smoke:setSizes(0.05, 0.1, 0.15, 0.2, 0.25)
-    smoke:setSpread(math.rad(55))
-    smoke:setTangentialAcceleration(3, 10)
 end
 
 function love.update(dt)
@@ -119,12 +107,21 @@ function love.update(dt)
 
     engine:update(dt)
 
-    smoke:moveTo(player:get("Position"):unpack())
-    smoke:emit(62)
-    smoke:update(dt)
+    local px, py = player:get("Position"):unpack()
+    camera:setPosition(px, py)
+    
+    local cx, cy = camera:getPosition()
+    lights:setTranslation(-cx + love.graphics.getWidth()/2, -cy + love.graphics.getHeight()/2)
 end
 
 function love.draw()
-    LightingSystem:render(lights, map, engine)
-    love.graphics.draw(smoke, 1)
+    camera:draw(function(l,t,w,h) 
+        
+        lights:draw(function() 
+            map:draw()
+            engine:draw()
+        end)
+    
+    end)    
 end
+
