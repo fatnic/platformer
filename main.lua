@@ -49,15 +49,15 @@ function love.load()
     world = bump.newWorld(16)
 
     lights = LightWorld({ ambient={20, 20, 20} })
-    lights:setShadowBlur(4)
+    lights:setShadowBlur(2)
 
     engine:addSystem(SpriteDrawingSystem())
     engine:addSystem(PlatformerSystem(world))
     engine:addSystem(LightingSystem(lights))
 
     map = sti('assets/maps/grid.lua')
-
-    camera = Gamera.new(0, 0, (map.width * map.tilewidth) + 500, (map.height * map.tileheight))
+    local mapw, maph = map.width * map.tilewidth, map.height * map.tileheight
+    camera = Gamera.new(0, 0, mapw, maph)
 
     local collisions = map.layers['collision'].objects
     local lighting   = map.layers['lighting'].objects
