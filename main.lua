@@ -6,6 +6,7 @@ assets = require 'assets'
 sti = require 'ext.sti'
 bump = require 'ext.bump'
 lume = require 'ext.lume'
+colorise = require 'ext.colorise'
 vec = require 'ext.hump.vector'
 Timer = require 'ext.hump.timer'
 Gamera = require 'ext.gamera'
@@ -43,6 +44,15 @@ Input = baton.new({
 
 Window = {}
 
+function hex2rgb(hex)
+    hex = hex:gsub("#","")
+    if(string.len(hex) == 3) then
+        return tonumber("0x"..hex:sub(1,1)) * 17, tonumber("0x"..hex:sub(2,2)) * 17, tonumber("0x"..hex:sub(3,3)) * 17
+    elseif(string.len(hex) == 6) then
+        return tonumber("0x"..hex:sub(1,2)), tonumber("0x"..hex:sub(3,4)), tonumber("0x"..hex:sub(5,6))
+    end
+end
+
 function love.load()
 
     engine = Engine()
@@ -56,7 +66,7 @@ function love.load()
     engine:addSystem(LightingSystem(lights))
 
     map = sti('assets/maps/grid.lua')
-    local mapw, maph = map.width * map.tilewidth, map.height * map.tileheight
+    mapw, maph = map.width * map.tilewidth, map.height * map.tileheight
     camera = Gamera.new(0, 0, mapw, maph)
 
     local collisions = map.layers['collision'].objects
@@ -72,7 +82,8 @@ function love.load()
         
         local l = Entity()
         l:add(Position(lt.x + lt.width / 2, lt.y + lt.height / 2))
-        l:add(LightEmitter(lp.r, lp.g, lp.b, lt.width / 2, true))
+        local _, red, green, blue = colorise.hex2rgba(lp.color)
+        l:add(LightEmitter(red, green, blue, lt.width / 2, true))
 
         engine:addEntity(l)
 
@@ -90,6 +101,10 @@ function love.load()
     player:add(Platformer())
     player:add(LightEmitter(255, 127, 63, 300))
     engine:addEntity(player)
+
+    local px, py = player:get("Position"):unpack()
+    local pw, ph = player:get("Sprite").width, player:get("Sprite").height
+    -- plight = lights:newRectangle(px + pw/2, py + ph/2, pw, ph)
 end
 
 function love.update(dt)
@@ -103,11 +118,15 @@ function love.update(dt)
     if Input:pressed 'jump'  then player:get("Platformer"):jump(dt) end
 
     -- light flicker
-    Timer.every(0.4, function() player:get("LightEmitter").light:setRange(math.random(200, 250)) end)
+    -- Timer.every(0.4, function() player:get("LightEmitter").light:setRange(math.random(200, 250)) end)
+    player:get("LightEmitter").light:setRange(math.random(200, 250)) 
 
     engine:update(dt)
 
     local px, py = player:get("Position"):unpack()
+    local pw, ph = player:get("Sprite").width, player:get("Sprite").height
+    
+    -- plight:setPosition(px + pw/2, py + ph/2)
     camera:setPosition(px, py)
     
     local cx, cy = camera:getPosition()

@@ -1,14 +1,14 @@
 return {
   version = "1.1",
   luaversion = "5.1",
-  tiledversion = "0.14.2",
+  tiledversion = "0.17.1",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 80,
   height = 30,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 52,
+  nextobjectid = 56,
   properties = {},
   tilesets = {
     {
@@ -150,6 +150,7 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
+      draworder = "topdown",
       properties = {},
       objects = {
         {
@@ -403,25 +404,9 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
+      draworder = "topdown",
       properties = {},
       objects = {
-        {
-          id = 32,
-          name = "",
-          type = "",
-          shape = "ellipse",
-          x = 424,
-          y = 224,
-          width = 448,
-          height = 448,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["b"] = "255",
-            ["g"] = "0",
-            ["r"] = "0"
-          }
-        },
         {
           id = 51,
           name = "",
@@ -435,8 +420,26 @@ return {
           visible = true,
           properties = {
             ["b"] = "0",
+            ["color"] = "#ff0b29d0",
             ["g"] = "255",
             ["r"] = "0"
+          }
+        },
+        {
+          id = 55,
+          name = "",
+          type = "",
+          shape = "ellipse",
+          x = 544,
+          y = -32,
+          width = 512,
+          height = 528,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["angle"] = 55,
+            ["color"] = "#ff645650",
+            ["direction"] = 90
           }
         }
       }

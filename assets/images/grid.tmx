@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="30" tilewidth="16" tileheight="16" nextobjectid="52">
- <tileset firstgid="1" name="grid-tiles" tilewidth="16" tileheight="16" tilecount="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="30" tilewidth="16" tileheight="16" nextobjectid="56">
+ <tileset firstgid="1" name="grid-tiles" tilewidth="16" tileheight="16" tilecount="16" columns="4">
   <image source="grid-tiles.png" width="64" height="64"/>
   <tile id="2">
    <properties>
@@ -4863,19 +4863,20 @@
   <object id="49" x="1024" y="208" width="240" height="16"/>
  </objectgroup>
  <objectgroup name="lighting">
-  <object id="32" x="424" y="224" width="448" height="448">
+  <object id="51" x="1072" y="224" width="448" height="448">
    <properties>
-    <property name="b" value="255"/>
-    <property name="g" value="0"/>
+    <property name="b" value="0"/>
+    <property name="color" type="color" value="#ff0b29d0"/>
+    <property name="g" value="255"/>
     <property name="r" value="0"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="51" x="1072" y="224" width="448" height="448">
+  <object id="55" x="544" y="-32" width="512" height="528">
    <properties>
-    <property name="b" value="0"/>
-    <property name="g" value="255"/>
-    <property name="r" value="0"/>
+    <property name="angle" type="int" value="55"/>
+    <property name="color" type="color" value="#ff645650"/>
+    <property name="direction" type="int" value="90"/>
    </properties>
    <ellipse/>
   </object>

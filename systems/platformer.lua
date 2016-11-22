@@ -53,7 +53,7 @@ function PlatformerSystem:update(dt)
                     platformer.velocity.y = 0 
                 end
 
-                if c.other.properties and c.other.properties.jumpboost then
+                if c.other.properties and c.other.properties.jumpboost and c.normal.y == -1 then
                     platformer.velocity.y = -platformer.jumpheight * 1.6
                     platformer.jumping = true
                     platformer.grounded = false
